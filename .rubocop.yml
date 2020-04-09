@@ -1,0 +1,46 @@
+require:
+  - standard/cop/semantic_blocks
+  - rubocop-md
+
+inherit_gem:
+  standard: config/base.yml
+
+AllCops:
+  Exclude:
+    - 'bin/*'
+    - 'tmp/**/*'
+    - 'Gemfile'
+    - 'vendor/**/*'
+    - 'gemfiles/**/*'
+    - 'lib/.rbnext/**/*'
+    - 'lib/generators/**/templates/*.rb'
+  DisplayCopNames: true
+  TargetRubyVersion: 2.7
+
+Standard/SemanticBlocks:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: true
+
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: no_comma
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: no_comma
+
+Lint/Void:
+  Exclude:
+    - '**/*.md'
+
+Lint/DuplicateMethods:
+  Exclude:
+    - '**/*.md'
+
+Naming/FileName:
+  Exclude:
+   - '**/*.md'
+
+Layout/InitialIndentation:
+  Exclude:
+    - 'CHANGELOG.md'
