@@ -17,7 +17,7 @@ Secondly, we wanted to have a store implementation independent API that would al
 
 ## Installation
 
-Add gem to your project:
+Add the gem to your project:
 
 ```ruby
 # Gemfile
@@ -143,6 +143,8 @@ Subscribers could be any callable Ruby objects that accept a single argument (ev
 
 We suggest putting subscribers to the `app/subscribers` folder using the following convention: `app/subscribers/on_<event_type>/<subscriber.rb>`, e.g. `app/subscribers/on_profile_created/create_chat_user.rb`.
 
+**NOTE:** Active Job must be loaded to use async subscribers (i.e., `require "active_job/railtie"` or `require "rails/all"` in your `config/application.rb`).
+
 ### Testing
 
 You can test subscribers as normal Ruby objects.
@@ -160,6 +162,8 @@ it "is subscribed to some event" do
     .with(event)
 end
 ```
+
+**NOTE:** You must have `rspec-rails` gem in your bundle to use `have_enqueued_async_subscriber_for` matcher.
 
 For synchronous subscribers using `have_received` is enough:
 
