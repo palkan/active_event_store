@@ -21,7 +21,6 @@ module ActiveEventStore
 
           defined_attributes << field
 
-          # TODO: rewrite with define_method
           class_eval <<~CODE, __FILE__, __LINE__ + 1
             def #{field}
               data[:#{field}]
