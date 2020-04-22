@@ -27,9 +27,10 @@ Thumbs.db
 .bundle/
 log/*.log
 pkg/
-spec/dummy/db/*.sqlite3
-spec/dummy/db/*.sqlite3-journal
-spec/dummy/tmp/
+spec/internal/db/migrate
+spec/internal/db/*.sqlite3
+spec/internal/db/*.sqlite3-journal
+spec/internal/tmp/
 
 Gemfile.lock
 Gemfile.local

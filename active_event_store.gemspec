@@ -25,8 +25,13 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.required_ruby_version = ">= 2.5"
 
+  # NOTE: RES is not following semantic versioning!
+  # View changelog before upgrade. Gem is actively developing.
+  # https://github.com/RailsEventStore/rails_event_store/releases
+  s.add_dependency "rails_event_store", ">= 0.42.0"
+
   s.add_development_dependency "bundler", ">= 1.15"
   s.add_development_dependency "combustion", ">= 1.1"
   s.add_development_dependency "rake", ">= 13.0"
-  s.add_development_dependency "rspec", "~> 3.8"
+  s.add_development_dependency "rspec-rails", ">= 3.8"
 end

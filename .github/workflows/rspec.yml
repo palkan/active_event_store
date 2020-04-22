@@ -21,10 +21,13 @@ jobs:
           "gemfiles/railsmaster.gemfile",
           "gemfiles/rails6.gemfile",
           "gemfiles/rails5.gemfile",
+          "gemfiles/res042.gemfile",
         ]
         exclude:
-        - ruby: "2.5.x"
+        - ruby: "2.5"
           gemfile: "gemfiles/railsmaster.gemfile"
+        - ruby: "2.5"
+          gemfile: "gemfiles/res042.gemfile"
     steps:
     - uses: actions/checkout@v2
     - uses: actions/cache@v1
@@ -36,6 +39,10 @@ jobs:
     - uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ matrix.ruby }}
+    - name: Install system deps
+      run: |
+        sudo apt-get update
+        sudo apt-get install libsqlite3-dev
     - name: Bundle install
       run: |
         bundle config path /home/runner/bundle
