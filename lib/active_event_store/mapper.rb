@@ -24,13 +24,13 @@ module ActiveEventStore
       # lazily add type to mapping
       # NOTE: use class name instead of a class to handle code reload
       # in development (to avoid accessing orphaned classes)
-      mapping.register(domain_event.type, domain_event.class.name) unless mapping.exist?(domain_event.type)
+      mapping.register(domain_event.event_type, domain_event.class.name) unless mapping.exist?(domain_event.event_type)
 
       RubyEventStore::SerializedRecord.new(
         event_id: domain_event.event_id,
         metadata: serializer.dump(domain_event.metadata.to_h),
         data: serializer.dump(domain_event.data),
-        event_type: domain_event.type
+        event_type: domain_event.event_type
       )
     end
 

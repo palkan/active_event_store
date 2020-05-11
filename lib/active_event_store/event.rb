@@ -68,12 +68,32 @@ module ActiveEventStore
       super(**{event_id: event_id, metadata: metadata, data: params}.compact)
     end
 
-    def type
-      self.class.identifier
+    # RES 0.44+
+    # https://github.com/RailsEventStore/rails_event_store/pull/724
+    if method_defined?(:event_type)
+      def event_type
+        self.class.identifier
+      end
+    else
+      def type
+        self.class.identifier
+      end
+
+      alias event_type type
     end
 
     def inspect
-      "#{self.class.name}<#{type}##{message_id}>, data: #{data}, metadata: #{metadata}"
+      "#{self.class.name}<#{event_type}##{message_id}>, data: #{data}, metadata: #{metadata}"
+    end
+
+    # Has been removed from RES: https://github.com/RailsEventStore/rails_event_store/pull/726
+    def to_h
+      {
+        event_id: event_id,
+        metadata: metadata.to_h,
+        data: data,
+        type: event_type
+      }
     end
 
     protected

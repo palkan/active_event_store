@@ -66,7 +66,7 @@ module ActiveEventStore
 
       @matching_events, @unmatching_events =
         in_block_events.partition do |actual_event|
-          (event_class.identifier == actual_event.type) &&
+          (event_class.identifier == actual_event.event_type) &&
             (attributes.nil? || attributes_match?(actual_event))
         end
 
