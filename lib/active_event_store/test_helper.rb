@@ -2,30 +2,30 @@
 
 module ActiveEventStore
   module TestHelper
-
     class EventPublishedMatcher
-      attr_reader :attributes
+      attr_reader :attributes,
+        :matching_events
 
       def initialize(expected_event_class, store: nil, with: nil, exactly: nil, at_least: nil, at_most: nil, refute: false)
         @event_class = expected_event_class
-        @store       = store || ActiveEventStore.event_store
-        @attributes  = with
-        @refute      = refute
+        @store = store || ActiveEventStore.event_store
+        @attributes = with
+        @refute = refute
 
         count_expectations = {
-          exactly:  exactly,
-          at_most:  at_most,
-          at_least: at_least,
+          exactly: exactly,
+          at_most: at_most,
+          at_least: at_least
         }.reject { |_, v| v.nil? }
 
         if count_expectations.length > 1
           raise ArgumentError("Only one of :exactly, :at_least or :at_most can be specified")
         elsif count_expectations.length == 0
           @count_expectation_kind = :at_least
-          @expected_count         = 1
+          @expected_count = 1
         else
           @count_expectation_kind = count_expectations.keys.first
-          @expected_count         = count_expectations.values.first
+          @expected_count = count_expectations.values.first
         end
       end
 
@@ -42,34 +42,36 @@ module ActiveEventStore
           block.call
         end
 
-        matching_events, unmatching_events = partition_events(events)
+        @matching_events, @unmatching_events = partition_events(events)
 
-        mismatch_message = count_mismatch_message(matching_events.size)
+        mismatch_message = count_mismatch_message(@matching_events.size)
 
-        unless mismatch_message.nil?
+        if mismatch_message
           expectations = [
             "Expected #{mismatch_message} #{@event_class.identifier}"
           ]
 
           expectations << if refute?
+            report_events = @matching_events
             "not to have been published"
           else
+            report_events = @unmatching_events
             "to have been published"
           end
 
           expectations << "with attributes #{attributes.inspect}" unless attributes.nil?
 
-          expectations << expectations.pop + ', but'
+          expectations << expectations.pop + ", but"
 
-          expectations << if unmatching_events.any?
-            unmatching_events.inject("published the following events instead:") do |msg, unmatching_event|
-              msg + "\n  #{unmatching_event.inspect}"
+          expectations << if report_events.any?
+            report_events.inject("published the following events instead:") do |msg, event|
+              msg + "\n  #{event.inspect}"
             end
           else
             "hasn't published anything"
           end
 
-          return expectations.join(' ')
+          return expectations.join(" ")
         end
 
         nil
@@ -109,8 +111,8 @@ module ActiveEventStore
       # Partitions events into matching and unmatching
       def partition_events(events)
         events.partition do |actual_event|
-          negate_on_refute((@event_class.identifier == actual_event.event_type) &&
-                             (@attributes.nil? || @attributes.all? { |k, v| v == actual_event.public_send(k) }))
+          (@event_class.identifier == actual_event.event_type) &&
+            (@attributes.nil? || @attributes.all? { |k, v| v == actual_event.public_send(k) })
         end
       end
 
@@ -132,7 +134,6 @@ module ActiveEventStore
           raise ArgumentError, "Unrecognized expectation kind: #{@count_expectation_kind}"
         end
       end
-
     end
 
     # Asserts that the given event was published `exactly`, `at_least` or `at_most` number of times
@@ -140,27 +141,31 @@ module ActiveEventStore
     def assert_event_published(expected_event, store: nil, with: nil, exactly: nil, at_least: nil, at_most: nil, &block)
       matcher = EventPublishedMatcher.new(
         expected_event,
-        store:    store,
-        with:     with,
-        exactly:  exactly,
+        store: store,
+        with: with,
+        exactly: exactly,
         at_least: at_least,
-        at_most:  at_most,
+        at_most: at_most
       )
 
       if (msg = matcher.matches?(block))
         fail(msg)
       end
+
+      matcher.matching_events
     end
 
+    # Asserts that the given event was *not* published `exactly`, `at_least` or `at_most` number of times
+    # to a specific `store` `with` a particular hash of attributes.
     def refute_event_published(expected_event, store: nil, with: nil, exactly: nil, at_least: nil, at_most: nil, &block)
       matcher = EventPublishedMatcher.new(
         expected_event,
-        store:    store,
-        with:     with,
-        exactly:  exactly,
+        store: store,
+        with: with,
+        exactly: exactly,
         at_least: at_least,
-        at_most:  at_most,
-        refute:   true
+        at_most: at_most,
+        refute: true
       )
 
       if (msg = matcher.matches?(block))
