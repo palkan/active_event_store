@@ -26,7 +26,7 @@ module ActiveEventStore
         **ActiveEventStore.config.store_options
       )
 
-      ActiveSupport.run_load_hooks("active_event_store", ActiveEventStore)
+      ActiveSupport.run_load_hooks(:active_event_store, ActiveEventStore)
     end
   end
 end
