@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "rails/engine"
+require "json"
 
 module ActiveEventStore
   class Engine < ::Rails::Engine
@@ -18,7 +19,9 @@ module ActiveEventStore
       # See https://railseventstore.org/docs/subscribe/#scheduling-async-handlers-after-commit
       ActiveEventStore.event_store = RailsEventStore::Client.new(
         dispatcher: RubyEventStore::ComposedDispatcher.new(
-          RailsEventStore::AfterCommitAsyncDispatcher.new(scheduler: RailsEventStore::ActiveJobScheduler.new),
+          RailsEventStore::AfterCommitAsyncDispatcher.new(
+            scheduler: RailsEventStore::ActiveJobScheduler.new(serializer: JSON)
+          ),
           RubyEventStore::Dispatcher.new
         ),
         repository: ActiveEventStore.config.repository,

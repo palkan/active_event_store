@@ -21,7 +21,7 @@ module ActiveEventStore
       end
 
       def matches?(actual_serialized)
-        actual = ActiveEventStore.event_store.deserialize(actual_serialized)
+        actual = ActiveEventStore.event_store.deserialize(actual_serialized, serializer: JSON)
 
         actual.event_type == event.event_type && data_matches?(actual.data)
       end
@@ -62,9 +62,9 @@ module ActiveEventStore
 end
 
 RSpec.configure do |config|
-  config.include(Module.new do
+  config.include(Module.new {
     def have_enqueued_async_subscriber_for(*args)
       ActiveEventStore::HaveEnqueuedAsyncSubscriberFor.new(*args)
     end
-  end)
+  })
 end
