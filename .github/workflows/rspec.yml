@@ -12,6 +12,7 @@ jobs:
     env:
       BUNDLE_JOBS: 4
       BUNDLE_RETRY: 3
+      BUNDLE_GEMFILE: ${{ matrix.gemfile }}
       CI: true
     strategy:
       fail-fast: false
@@ -25,31 +26,16 @@ jobs:
           gemfile: "gemfiles/railsmaster.gemfile"
         - ruby: "2.6"
           gemfile: "gemfiles/rails5.gemfile"
-        - ruby: "2.6"
-          gemfile: "gemfiles/res042.gemfile"
-        - ruby: "2.6"
-          gemfile: "gemfiles/res043.gemfile"
     steps:
     - uses: actions/checkout@v2
-    - uses: actions/cache@v1
-      with:
-        path: /home/runner/bundle
-        key: bundle-${{ matrix.ruby }}-${{ matrix.gemfile }}-${{ hashFiles(matrix.gemfile) }}-${{ hashFiles('**/*.gemspec') }}
-        restore-keys: |
-          bundle-${{ matrix.ruby }}-${{ matrix.gemfile }}-
-    - uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: ${{ matrix.ruby }}
     - name: Install system deps
       run: |
         sudo apt-get update
         sudo apt-get install libsqlite3-dev
-    - name: Bundle install
-      run: |
-        bundle config path /home/runner/bundle
-        bundle config --global gemfile ${{ matrix.gemfile }}
-        bundle install
-        bundle update
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby }}
+        bundler-cache: true
     - name: Run RSpec
       run: |
         bundle exec rspec
