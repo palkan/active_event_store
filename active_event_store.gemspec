@@ -23,11 +23,8 @@ Gem::Specification.new do |s|
 
   s.files = Dir.glob("lib/**/*") + Dir.glob("bin/**/*") + %w[README.md LICENSE.txt CHANGELOG.md]
   s.require_paths = ["lib"]
-  s.required_ruby_version = ">= 2.5"
+  s.required_ruby_version = ">= 2.6"
 
-  # NOTE: RES is not following semantic versioning!
-  # View changelog before upgrade. Gem is actively developing.
-  # https://github.com/RailsEventStore/rails_event_store/releases
   s.add_dependency "rails_event_store", ">= 2.1.0"
 
   s.add_development_dependency "bundler", ">= 1.15"

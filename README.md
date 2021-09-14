@@ -34,7 +34,8 @@ rails db:migrate
 ### Requirements
 
 - Ruby (MRI) >= 2.5.0
-- Rails >= 5.0
+- Rails >= 6.0
+- RailsEventStore >= 2.1
 
 ## Usage
 
