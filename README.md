@@ -21,7 +21,7 @@ Add the gem to your project:
 
 ```ruby
 # Gemfile
-gem "active_event_store"
+gem "active_event_store", "~> 1.0"
 ```
 
 Setup database according to the [Rails Event Store docs](https://railseventstore.org/docs/install/#setup-data-model):
@@ -33,7 +33,7 @@ rails db:migrate
 
 ### Requirements
 
-- Ruby (MRI) >= 2.5.0
+- Ruby (MRI) >= 2.6
 - Rails >= 6.0
 - RailsEventStore >= 2.1
 
