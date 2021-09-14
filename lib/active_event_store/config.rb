@@ -4,10 +4,14 @@ require "json"
 
 module ActiveEventStore
   class Config
-    attr_writer :repository, :job_queue_name, :store_options
+    attr_writer :repository, :serializer, :job_queue_name, :store_options
 
     def repository
-      @repository ||= RailsEventStoreActiveRecord::EventRepository.new(serializer: JSON)
+      @repository ||= RailsEventStoreActiveRecord::EventRepository.new(serializer: serializer)
+    end
+
+    def serializer
+      @serializer ||= JSON
     end
 
     def job_queue_name

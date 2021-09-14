@@ -21,7 +21,10 @@ module ActiveEventStore
       end
 
       def matches?(actual_serialized)
-        actual = ActiveEventStore.event_store.deserialize(actual_serialized, serializer: JSON)
+        actual = ActiveEventStore.event_store.deserialize(
+          actual_serialized,
+          serializer: ActiveEventStore.config.serializer
+        )
 
         actual.event_type == event.event_type && data_matches?(actual.data)
       end

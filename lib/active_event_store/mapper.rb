@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require "json"
-
 module ActiveEventStore
   using(Module.new {
     refine Hash do
@@ -15,7 +13,7 @@ module ActiveEventStore
   #
   # See https://github.com/RailsEventStore/rails_event_store/blob/v0.35.0/ruby_event_store/lib/ruby_event_store/mappers/default.rb
   class Mapper
-    def initialize(mapping:, serializer: JSON)
+    def initialize(mapping:, serializer: ActiveEventStore.config.serializer)
       @serializer = serializer
       @mapping = mapping
     end

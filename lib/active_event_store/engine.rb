@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "rails/engine"
-require "json"
 
 module ActiveEventStore
   class Engine < ::Rails::Engine
@@ -20,7 +19,9 @@ module ActiveEventStore
       ActiveEventStore.event_store = RailsEventStore::Client.new(
         dispatcher: RubyEventStore::ComposedDispatcher.new(
           RailsEventStore::AfterCommitAsyncDispatcher.new(
-            scheduler: RailsEventStore::ActiveJobScheduler.new(serializer: JSON)
+            scheduler: RailsEventStore::ActiveJobScheduler.new(
+              serializer: ActiveEventStore.config.serializer
+            )
           ),
           RubyEventStore::Dispatcher.new
         ),

@@ -38,7 +38,7 @@ module ActiveEventStore
     end
 
     def perform(payload)
-      event = event_store.deserialize(**payload, serializer: JSON)
+      event = event_store.deserialize(**payload, serializer: ActiveEventStore.config.serializer)
 
       event_store.with_metadata(**event.metadata.to_h) do
         subscriber.call(event)
