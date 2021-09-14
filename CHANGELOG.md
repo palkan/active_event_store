@@ -5,6 +5,7 @@
 ## 1.0.0 (2021-01-14)
 
 - Ruby 2.6+, Rails 6+ and RailsEventStore 2.1+ is required.
+
 ## 0.2.1 (2020-09-30)
 
 - Fix Active Support load hook name. ([@palkan][])
