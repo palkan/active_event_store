@@ -15,3 +15,5 @@ rescue LoadError
   task(:rubocop) {}
   task("rubocop:md") {}
 end
+
+task default: %w[rubocop rubocop:md spec]
