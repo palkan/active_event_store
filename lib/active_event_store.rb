@@ -24,8 +24,8 @@ module ActiveEventStore
       @config ||= Config.new
     end
 
-    def subscribe(subscriber = nil, to: nil, sync: false)
-      subscriber ||= Proc.new
+    def subscribe(subscriber = nil, to: nil, sync: false, &block)
+      subscriber ||= block
 
       to ||= infer_event_from_subscriber(subscriber) if subscriber.is_a?(Module)
 
