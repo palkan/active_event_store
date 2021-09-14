@@ -18,7 +18,11 @@ module ActiveEventStore
       # See https://railseventstore.org/docs/subscribe/#scheduling-async-handlers-after-commit
       ActiveEventStore.event_store = RailsEventStore::Client.new(
         dispatcher: RubyEventStore::ComposedDispatcher.new(
-          RailsEventStore::AfterCommitAsyncDispatcher.new(scheduler: RailsEventStore::ActiveJobScheduler.new),
+          RailsEventStore::AfterCommitAsyncDispatcher.new(
+            scheduler: RailsEventStore::ActiveJobScheduler.new(
+              serializer: ActiveEventStore.config.serializer
+            )
+          ),
           RubyEventStore::Dispatcher.new
         ),
         repository: ActiveEventStore.config.repository,
