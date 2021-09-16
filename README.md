@@ -150,19 +150,31 @@ We suggest putting subscribers to the `app/subscribers` folder using the followi
 
 You can test subscribers as normal Ruby objects.
 
-**NOTE:** Currently, we provide additional matchers only for RSpec. PRs with Minitest support are welcomed!
+**NOTE** To test using minitest include the `ActiveEventStore::TestHelpers` module in your tests.
 
 To test that a given subscriber exists, you can use the `have_enqueued_async_subscriber_for` matcher:
 
 ```ruby
-# for asynchronous subscriptions
+# for asynchronous subscriptions (rspec)
 it "is subscribed to some event" do
   event = MyEvent.new(some: "data")
   expect { ActiveEventStore.publish event }
     .to have_enqueued_async_subscriber_for(MySubscriberService)
     .with(event)
 end
+
+# for asynchronous subscriptions (minitest)
+def test_is_subscribed_to_some_event
+  event = MyEvent.new(some: "data")
+  
+  assert_async_event_subscriber_enqueued(MySubscriberService, event: event) do
+    ActiveEventStore.publish event
+  end
+end
 ```
+
+**NOTE** Async event subscribers are queued only after the current transaction has commited so when using `assert_enqued_async_subcriber` in rails
+make sure to have `self.use_transactional_fixtures = false` at the top of your test class.
 
 **NOTE:** You must have `rspec-rails` gem in your bundle to use `have_enqueued_async_subscriber_for` matcher.
 
@@ -183,10 +195,14 @@ end
 To test event publishing, use `have_published_event` matcher:
 
 ```ruby
+# rspec
 expect { subject }.to have_published_event(ProfileCreated).with(user_id: user.id)
+
+# minitest
+assert_event_published(ProfileCreated, with: { user_id: user.id }) { subject }
 ```
 
-**NOTE:** `have_published_event` only supports block expectations.
+**NOTE:** `have_published_event` and `assert_event_published` only supports block expectations.
 
 **NOTE 2** `with` modifier works like `have_attributes` matcher (not `contain_exactly`); you can only specify serializable attributes in `with` (i.e. sync attributes are not supported, 'cause they are not persistent).
 

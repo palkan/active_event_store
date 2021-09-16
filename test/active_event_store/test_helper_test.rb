@@ -122,6 +122,6 @@ class ActiveEventStore::TestHelperTest < Minitest::Test
       assert_async_event_subscriber_enqueued(@test_subscriber) {}
     end
 
-    assert_match /No enqueued job found.*job.*ActiveEventStore::TestHelperTest::TestSubscriber::SubscriberJob.*queue.*"events_subscribers"/, e.message
+    assert_match(/No enqueued job found.*job.*ActiveEventStore::TestHelperTest::TestSubscriber::SubscriberJob.*queue.*"events_subscribers"/, e.message)
   end
 end
