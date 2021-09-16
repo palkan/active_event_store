@@ -2,9 +2,11 @@
 
 ## master
 
+## 1.0.1 (2021-09-16)
+
 - Add minitest assertions: `assert_event_published`, `refute_event_published`, `assert_async_event_subscriber_enqueued`  ([@chriscz][])
 
-## 1.0.0 (2021-01-14)
+## 1.0.0 (2021-09-14)
 
 - Ruby 2.6+, Rails 6+ and RailsEventStore 2.1+ is required.
 
@@ -23,3 +25,4 @@ Now `ActiveSupport.on_load(:active_event_store) { ... }` works.
 - Open source Active Event Store. ([@palkan][])
 
 [@palkan]: https://github.com/palkan
+[@chriscz]: https://github.com/chriscz
