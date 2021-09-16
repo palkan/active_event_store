@@ -2,6 +2,8 @@
 
 ## master
 
+- Add minitest assertions: `assert_event_published`, `refute_event_published`, `assert_async_event_subscriber_enqueued`  ([@chriscz][])
+
 ## 1.0.0 (2021-01-14)
 
 - Ruby 2.6+, Rails 6+ and RailsEventStore 2.1+ is required.
