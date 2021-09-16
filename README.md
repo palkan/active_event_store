@@ -166,14 +166,14 @@ end
 # for asynchronous subscriptions (minitest)
 def test_is_subscribed_to_some_event
   event = MyEvent.new(some: "data")
-  
+
   assert_async_event_subscriber_enqueued(MySubscriberService, event: event) do
     ActiveEventStore.publish event
   end
 end
 ```
 
-**NOTE** Async event subscribers are queued only after the current transaction has commited so when using `assert_enqued_async_subcriber` in rails
+**NOTE** Async event subscribers are queued only after the current transaction has committed so when using `assert_enqued_async_subcriber` in rails
 make sure to have `self.use_transactional_fixtures = false` at the top of your test class.
 
 **NOTE:** You must have `rspec-rails` gem in your bundle to use `have_enqueued_async_subscriber_for` matcher.
@@ -199,7 +199,7 @@ To test event publishing, use `have_published_event` matcher:
 expect { subject }.to have_published_event(ProfileCreated).with(user_id: user.id)
 
 # minitest
-assert_event_published(ProfileCreated, with: { user_id: user.id }) { subject }
+assert_event_published(ProfileCreated, with: {user_id: user.id}) { subject }
 ```
 
 **NOTE:** `have_published_event` and `assert_event_published` only supports block expectations.

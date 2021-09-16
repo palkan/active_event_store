@@ -141,7 +141,7 @@ module ActiveEventStore
           event_class.identifier == event.event_type
         end
 
-        def event_data_matches?(attributes = nil, event)
+        def event_data_matches?(attributes, event)
           (attributes.nil? || attributes.all? { |k, v| v == event.public_send(k) })
         end
       end

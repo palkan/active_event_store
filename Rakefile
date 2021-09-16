@@ -24,4 +24,4 @@ Rake::TestTask.new(:test) do |t|
   t.warning = false
 end
 
-task default: %w[rubocop rubocop:md spec]
+task default: %w[rubocop rubocop:md spec test]
