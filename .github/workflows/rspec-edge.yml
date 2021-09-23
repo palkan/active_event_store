@@ -1,12 +1,13 @@
 name: Build Edge
 
-on: [workflow_dispatch]
-#   push:
-#     branches:
-#     - master
-#   pull_request:
-#   schedule:
-#     - cron: "10 4 * * */5"
+on:
+  workflow_dispatch:
+  push:
+    branches:
+    - master
+  pull_request:
+  schedule:
+    - cron: "10 4 * * */5"
 
 jobs:
   rspec:

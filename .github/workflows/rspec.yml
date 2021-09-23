@@ -22,9 +22,8 @@ jobs:
           "gemfiles/rails6.gemfile",
         ]
         include:
-        # BLOCKED: https://github.com/zdennis/activerecord-import/issues/736
-        # - ruby: "3.0"
-        #   gemfile: "gemfiles/railsmaster.gemfile"
+        - ruby: "3.0"
+          gemfile: "gemfiles/railsmaster.gemfile"
         - ruby: "2.6"
           gemfile: "gemfiles/rails6.gemfile"
     steps:
