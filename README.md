@@ -140,7 +140,7 @@ ActiveSupport.on_load :active_event_store do |store|
 end
 ```
 
-Subscribers could be any callable Ruby objects that accept a single argument (event) as its input.
+Subscribers could be any callable Ruby objects that accept a single argument (event) as its input or classes that inherit from Class` and have `#call` as an instance method.
 
 We suggest putting subscribers to the `app/subscribers` folder using the following convention: `app/subscribers/on_<event_type>/<subscriber.rb>`, e.g. `app/subscribers/on_profile_created/create_chat_user.rb`.
 
