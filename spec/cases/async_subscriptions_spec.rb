@@ -58,4 +58,60 @@ describe "async #subscribe" do
       ActiveEventStore.subscribe(to: event_class) { |_| true }
     end.to raise_error(/could not be asynchronous/)
   end
+
+  context "when subscriber is a Class" do
+    context "when call is a class method" do
+      let(:callable) {
+        ActiveEventStore::TestSubscriber = Class.new do
+          class << self
+            attr_accessor :events
+
+            def call(event)
+              self.events ||= [] << event
+            end
+          end
+        end
+      }
+
+      it "calls subscriber when performed", active_job: :perform do
+        ActiveEventStore.subscribe(callable, to: event_class)
+
+        ActiveRecord::Base.transaction do
+          ActiveEventStore.publish(event)
+        end
+
+        expect(callable.events.size).to eq 1
+        expect(callable.events.last.message_id).to eq event.message_id
+        expect(callable.events.last.user).to be_nil
+        expect(callable.events.last.user_id).to eq 0
+      end
+    end
+
+    context "when call is an instance method" do
+      let(:callable) {
+        ActiveEventStore::TestSubscriber = Class.new do
+          class << self
+            attr_accessor :events
+          end
+
+          def call(event)
+            self.class.events ||= [] << event
+          end
+        end
+      }
+
+      it "calls subscriber instance when performed", active_job: :perform do
+        ActiveEventStore.subscribe(callable, to: event_class)
+
+        ActiveRecord::Base.transaction do
+          ActiveEventStore.publish(event)
+        end
+
+        expect(callable.events.size).to eq 1
+        expect(callable.events.last.message_id).to eq event.message_id
+        expect(callable.events.last.user).to be_nil
+        expect(callable.events.last.user_id).to eq 0
+      end
+    end
+  end
 end
