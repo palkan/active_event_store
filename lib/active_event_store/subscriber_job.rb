@@ -41,17 +41,17 @@ module ActiveEventStore
       event = event_store.deserialize(**payload, serializer: ActiveEventStore.config.serializer)
 
       event_store.with_metadata(**event.metadata.to_h) do
-        if subscriber.is_a?(Class) && !subscriber.respond_to?(:call)
-          subscriber.new.call(event)
-        else
-          subscriber.call(event)
-        end
+        subscriber.call(event)
       end
     end
 
     private
 
     def subscriber
+      if self.class.subscriber.is_a?(Class) && !self.class.subscriber.respond_to?(:call)
+        return self.class.subscriber.new
+      end
+
       self.class.subscriber
     end
 
