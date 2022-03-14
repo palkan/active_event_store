@@ -2,10 +2,6 @@
 
 ## master
 
-## 1.0.2 (2022-03-11)
-
-- Add support to classes that inherit from Class as async subscribers ([@caws][])
-
 ## 1.0.1 (2021-09-16)
 
 - Add minitest assertions: `assert_event_published`, `refute_event_published`, `assert_async_event_subscriber_enqueued`  ([@chriscz][])
