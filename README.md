@@ -146,7 +146,7 @@ We suggest putting subscribers to the `app/subscribers` folder using the followi
 
 **NOTE:** Active Job must be loaded to use async subscribers (i.e., `require "active_job/railtie"` or `require "rails/all"` in your `config/application.rb`).
 
-**NOTE:** Subscribers that inherit from `Class` and implement `call` as a class method will not be instantiated.  
+**NOTE:** Subscribers that inherit from `Class` and implement `call` as a class method will not be instantiated.
 
 ### Testing
 

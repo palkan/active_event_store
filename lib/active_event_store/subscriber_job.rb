@@ -14,11 +14,11 @@ module ActiveEventStore
 
         raise ArgumentError, "Async subscriber must be a module/class, not instance" unless callable.is_a?(Module)
 
-        if callable.const_defined?("SubscriberJob", false)
-          callable.const_get("SubscriberJob", false)
+        if callable.const_defined?(:SubscriberJob, false)
+          callable.const_get(:SubscriberJob, false)
         else
           callable.const_set(
-            "SubscriberJob",
+            :SubscriberJob,
             Class.new(self).tap do |job|
               queue_as ActiveEventStore.config.job_queue_name
 
@@ -31,8 +31,8 @@ module ActiveEventStore
       def for(callable)
         raise ArgumentError, "Async subscriber must be a module/class" unless callable.is_a?(Module)
 
-        callable.const_defined?("SubscriberJob", false) ?
-          callable.const_get("SubscriberJob", false) :
+        callable.const_defined?(:SubscriberJob, false) ?
+          callable.const_get(:SubscriberJob, false) :
           nil
       end
     end
