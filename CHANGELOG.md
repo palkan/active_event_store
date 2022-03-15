@@ -2,6 +2,10 @@
 
 ## master
 
+## 1.0.2 (2021-03-15)
+
+- Support using classes with `#call` as async subscribers. ([@caws][])
+
 ## 1.0.1 (2021-09-16)
 
 - Add minitest assertions: `assert_event_published`, `refute_event_published`, `assert_async_event_subscriber_enqueued`  ([@chriscz][])
@@ -26,3 +30,4 @@ Now `ActiveSupport.on_load(:active_event_store) { ... }` works.
 
 [@palkan]: https://github.com/palkan
 [@chriscz]: https://github.com/chriscz
+[@caws]: https://github.com/caws
