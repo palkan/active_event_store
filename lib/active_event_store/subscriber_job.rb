@@ -48,6 +48,10 @@ module ActiveEventStore
     private
 
     def subscriber
+      if self.class.subscriber.is_a?(Class) && !self.class.subscriber.respond_to?(:call)
+        return self.class.subscriber.new
+      end
+
       self.class.subscriber
     end
 
