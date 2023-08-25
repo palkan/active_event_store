@@ -2,6 +2,10 @@
 
 ## master
 
+## 1.1.0 (2023-08-24)
+
+- Require Ruby 2.7+. ([@palkan][])
+
 - Fix compatibility with RES 2.11 ([@palkan][])
 
 ## 1.0.2 (2021-03-15)
