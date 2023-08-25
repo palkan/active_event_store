@@ -22,7 +22,7 @@ module ActiveEventStore
 
       def matches?(actual_serialized)
         actual = ActiveEventStore.event_store.deserialize(
-          **actual_serialized,
+          **actual_serialized.symbolize_keys,
           serializer: ActiveEventStore.config.serializer
         )
 

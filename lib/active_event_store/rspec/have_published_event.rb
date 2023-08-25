@@ -116,7 +116,7 @@ module ActiveEventStore
     end
 
     def message_expectation_modifier
-      number_modifier = @expected_number == 1 ? "once" : "#{@expected_number} times"
+      number_modifier = (@expected_number == 1) ? "once" : "#{@expected_number} times"
       case @expectation_type
       when :exactly then "exactly #{number_modifier}"
       when :at_most then "at most #{number_modifier}"

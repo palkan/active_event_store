@@ -35,7 +35,7 @@ module ActiveEventStore
       end
 
       identifier =
-        if to.is_a?(Class) && ActiveEventStore::Event >= to
+        if to.is_a?(Class) && to <= ActiveEventStore::Event
           # register event
           mapping.register_event to
 

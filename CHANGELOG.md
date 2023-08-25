@@ -2,6 +2,8 @@
 
 ## master
 
+- Fix compatibility with RES 2.11 ([@palkan][])
+
 ## 1.0.2 (2021-03-15)
 
 - Support using classes with `#call` as async subscribers. ([@caws][])

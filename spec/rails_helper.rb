@@ -1,34 +1,13 @@
 # frozen_string_literal: true
 
 begin
-  require "pry-byebug"
+  require "debug" unless ENV["CI"]
 rescue LoadError
 end
 
 ENV["RAILS_ENV"] = "test"
 
-require "combustion"
-
-require "rails_event_store"
-require "rails/generators"
-
-FileUtils.rm_rf File.join(__dir__, "internal", "db", "migrate")
-
-Dir.chdir(File.join(__dir__, "internal")) do
-  Rails::Generators.invoke("rails_event_store_active_record:migration")
-end
-
-begin
-  Combustion.initialize! :active_record, :active_job do
-    config.logger = Logger.new(nil)
-    config.log_level = :fatal
-    config.active_job.queue_adapter = :test
-  end
-rescue => e
-  # Fail fast if application couldn't be loaded
-  $stdout.puts "Failed to load the app: #{e.message}\n#{e.backtrace.take(5).join("\n")}"
-  exit(1)
-end
+require_relative "support/application"
 
 require "rspec/rails"
 require "active_event_store"
