@@ -87,10 +87,10 @@ You can also register events manually:
 
 ```ruby
 # by passing an event class
-ActiveEventStore.mapper.register_event MyEventClass
+ActiveEventStore.mapping.register_event MyEventClass
 
 # or more precisely (in that case `event.type` must be equal to "my_event")
-ActiveEventStore.mapper.register "my_event", MyEventClass
+ActiveEventStore.mapping.register "my_event", MyEventClass
 ```
 
 ### Publish events
