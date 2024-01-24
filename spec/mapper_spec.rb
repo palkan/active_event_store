@@ -15,8 +15,8 @@ describe ActiveEventStore::Mapper do
       record = subject.event_to_record(event)
 
       expect(record.event_type).to eq "test_event"
-      expect(record.data).to eq({user_id: 1, action_type: "test"}.to_json)
-      expect(record.metadata).to eq({timestamp: 321}.to_json)
+      expect(record.data).to eq({user_id: 1, action_type: "test"})
+      expect(record.metadata).to eq({timestamp: 321})
       expect(record.event_id).to eq event.message_id
     end
 
@@ -24,7 +24,7 @@ describe ActiveEventStore::Mapper do
       event = event_class.new(user_id: 1, user: {name: "Sara"}, action_type: "test", metadata: {timestamp: 321})
 
       record = subject.event_to_record(event)
-      expect(record.data).to eq({user_id: 1, action_type: "test"}.to_json)
+      expect(record.data).to eq({user_id: 1, action_type: "test"})
     end
   end
 

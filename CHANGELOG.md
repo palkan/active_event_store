@@ -2,6 +2,8 @@
 
 ## master
 
+- Use custom pipeline mapper and domain event transformer. ([@Samsinite][])
+
 ## 1.1.0 (2023-08-24)
 
 - Require Ruby 2.7+. ([@palkan][])
