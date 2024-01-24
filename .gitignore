@@ -29,7 +29,7 @@ log/*.log
 pkg/
 spec/internal/db/migrate
 spec/internal/db/*.sqlite3
-spec/internal/db/*.sqlite3-journal
+spec/internal/db/*.sqlite3-*
 spec/internal/tmp/
 
 Gemfile.lock

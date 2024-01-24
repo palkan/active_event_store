@@ -5,6 +5,7 @@ require "rails_event_store"
 require "active_event_store/version"
 
 require "active_event_store/config"
+require "active_event_store/domain_event"
 require "active_event_store/event"
 require "active_event_store/mapping"
 require "active_event_store/mapper"
