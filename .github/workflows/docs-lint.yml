@@ -13,3 +13,11 @@ on:
     - "*.md"
     - "**/*.md"
     - ".github/workflows/docs-lint.yml"
+
+jobs:
+  docs-lint:
+    uses: anycable/github-actions/.github/workflows/docs-lint.yml@master
+    with:
+      mdl-path: README.md CHANGELOG.md
+      forspell-args: "*.md"
+      rubocop-gemfile: Gemfile
