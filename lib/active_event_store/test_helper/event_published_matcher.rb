@@ -142,7 +142,7 @@ module ActiveEventStore
         end
 
         def event_data_matches?(attributes, event)
-          (attributes.nil? || attributes.all? { |k, v| v == event.public_send(k) })
+          attributes.nil? || attributes.all? { |k, v| v == event.public_send(k) }
         end
       end
     end
