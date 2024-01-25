@@ -2,6 +2,8 @@
 
 ## master
 
+## 1.2.0 (2024-01-25)
+
 - Use custom pipeline mapper and domain event transformer. ([@Samsinite][])
 
 ## 1.1.0 (2023-08-24)
@@ -39,3 +41,4 @@ Now `ActiveSupport.on_load(:active_event_store) { ... }` works.
 [@palkan]: https://github.com/palkan
 [@chriscz]: https://github.com/chriscz
 [@caws]: https://github.com/caws
+[@Samsinite]: https://github.com/Samsinite
