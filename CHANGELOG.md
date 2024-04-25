@@ -2,6 +2,8 @@
 
 ## master
 
+- Updates the railtie to define `Rails.configuration.event_store`. ([@Samsinite][])
+
 ## 1.2.0 (2024-01-25)
 
 - Use custom pipeline mapper and domain event transformer. ([@Samsinite][])
