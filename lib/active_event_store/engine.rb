@@ -29,6 +29,7 @@ module ActiveEventStore
         mapper: ActiveEventStore::Mapper.new(mapping: ActiveEventStore.mapping),
         **ActiveEventStore.config.store_options
       )
+      Rails.configuration.event_store = ActiveEventStore.event_store
 
       ActiveSupport.run_load_hooks(:active_event_store, ActiveEventStore)
     end
