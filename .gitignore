@@ -33,7 +33,7 @@ spec/internal/db/*.sqlite3-*
 spec/internal/tmp/
 
 Gemfile.lock
-Gemfile.local
+Gemfile.local*
 .rspec
 .ruby-version
 *.gem

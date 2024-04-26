@@ -11,6 +11,7 @@ FileUtils.rm_rf File.join(APP_ROOT, "db", "migrate")
 
 begin
   Combustion.initialize! :active_record, :active_job do
+    config.load_defaults Rails::VERSION::STRING.to_f
     config.logger = Logger.new(nil)
     config.log_level = :fatal
     config.active_job.queue_adapter = :test
@@ -25,7 +26,13 @@ Dir.chdir(APP_ROOT) do
   Rails::Generators.invoke("rails_event_store_active_record:migration")
 end
 
-ActiveRecord::MigrationContext.new(
-  File.join(APP_ROOT, "db/migrate"),
-  ActiveRecord::SchemaMigration
-).migrate
+if Rails::VERSION::MAJOR > 6
+  ActiveRecord::MigrationContext.new(
+    File.join(APP_ROOT, "db/migrate")
+  ).migrate
+else
+  ActiveRecord::MigrationContext.new(
+    File.join(APP_ROOT, "db/migrate"),
+    ActiveRecord::SchemaMigration
+  ).migrate
+end
