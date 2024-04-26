@@ -2,6 +2,8 @@
 
 ## master
 
+## 1.2.1 (2024-04-26)
+
 - Updates the railtie to define `Rails.configuration.event_store`. ([@Samsinite][])
 
 ## 1.2.0 (2024-01-25)
