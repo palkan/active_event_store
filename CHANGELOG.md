@@ -2,6 +2,8 @@
 
 ## master
 
+- Corrected two typos in the engine warning when Active Job isn't loaded ([@wwahammy][])
+
 ## 1.2.1 (2024-04-26)
 
 - Updates the railtie to define `Rails.configuration.event_store`. ([@Samsinite][])
