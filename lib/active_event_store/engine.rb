@@ -8,7 +8,7 @@ module ActiveEventStore
 
     # Use before configuration hook to check for ActiveJob presence
     ActiveSupport.on_load(:before_configuration) do
-      next warn "Active Job is not loaded. Active Event Store asynchrounous subscriptions won't worke" unless defined?(::ActiveJob)
+      next warn "Active Job is not loaded. Active Event Store asynchronous subscriptions won't work" unless defined?(::ActiveJob)
 
       require "active_event_store/subscriber_job"
       require "active_event_store/rspec/have_enqueued_async_subscriber_for" if defined?(::RSpec::Matchers)
