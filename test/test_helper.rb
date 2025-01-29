@@ -4,13 +4,14 @@ $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 
 ENV["RAILS_ENV"] = "test"
 
-require "bundler"
-Bundler.require :default, :test
-
 begin
   require "debug" unless ENV["CI"]
 rescue LoadError
 end
+
+# https://github.com/rails/rails/issues/54263
+
+require "logger"
 
 require_relative "../spec/support/application"
 

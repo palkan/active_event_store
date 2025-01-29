@@ -7,6 +7,9 @@ end
 
 ENV["RAILS_ENV"] = "test"
 
+# https://github.com/rails/rails/issues/54263
+require "logger"
+
 require_relative "support/application"
 
 require "rspec/rails"
