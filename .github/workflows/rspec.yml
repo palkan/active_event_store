@@ -22,8 +22,10 @@ jobs:
           "gemfiles/rails71.gemfile",
         ]
         include:
-        - ruby: "3.3"
+        - ruby: "3.4"
           gemfile: "gemfiles/railsmaster.gemfile"
+        - ruby: "3.3"
+          gemfile: "gemfiles/rails8.gemfile"
         - ruby: "3.1"
           gemfile: "gemfiles/rails7.gemfile"
         - ruby: "3.0"
