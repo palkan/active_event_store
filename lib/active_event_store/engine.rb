@@ -17,13 +17,15 @@ module ActiveEventStore
     config.to_prepare do
       # See https://railseventstore.org/docs/subscribe/#scheduling-async-handlers-after-commit
       ActiveEventStore.event_store = RailsEventStore::Client.new(
-        dispatcher: RubyEventStore::ComposedDispatcher.new(
-          RailsEventStore::AfterCommitAsyncDispatcher.new(
-            scheduler: RailsEventStore::ActiveJobScheduler.new(
-              serializer: ActiveEventStore.config.serializer
-            )
+        message_broker: RubyEventStore::Broker.new(
+          dispatcher: RubyEventStore::ComposedDispatcher.new(
+            RailsEventStore::AfterCommitAsyncDispatcher.new(
+              scheduler: RailsEventStore::ActiveJobScheduler.new(
+                serializer: ActiveEventStore.config.serializer
+              )
+            ),
+            RubyEventStore::Dispatcher.new
           ),
-          RubyEventStore::Dispatcher.new
         ),
         repository: ActiveEventStore.config.repository,
         mapper: ActiveEventStore::Mapper.new(mapping: ActiveEventStore.mapping),
