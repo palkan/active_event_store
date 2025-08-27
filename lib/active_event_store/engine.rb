@@ -23,7 +23,7 @@ module ActiveEventStore
               scheduler: RailsEventStore::ActiveJobScheduler.new(
                 serializer: ActiveEventStore.config.serializer
               )
-            ),
+            )
             RubyEventStore::Dispatcher.new
           ),
         ),
