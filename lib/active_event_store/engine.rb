@@ -23,9 +23,9 @@ module ActiveEventStore
               scheduler: RailsEventStore::ActiveJobScheduler.new(
                 serializer: ActiveEventStore.config.serializer
               )
-            )
+            ),
             RubyEventStore::Dispatcher.new
-          ),
+          )
         ),
         repository: ActiveEventStore.config.repository,
         mapper: ActiveEventStore::Mapper.new(mapping: ActiveEventStore.mapping),
