@@ -6,6 +6,7 @@ require_relative "../../spec/support/test_events"
 
 class ActiveEventStore::TestHelperTest < Minitest::Test
   include ActiveEventStore::TestHelper
+
   attr_reader :event_class,
     :event,
     :event2
