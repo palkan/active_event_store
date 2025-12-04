@@ -82,7 +82,7 @@ class ActiveEventStore::TestHelperTest < Minitest::Test
       end
     end
 
-    assert_match(/at least 1 test_event.*with attributes.*:user_id=>25.*:action_type=>"death".*but published(.|[\n])*:user_id=>25.*:action_type=>"birth"/s, e.message)
+    assert_match(/at least 1 test_event.*with attributes.*#{{user_id: 25, action_type: "death"}.inspect}.*but published(.|[\n])*#{{user_id: 25, action_type: "birth"}.inspect}/s, e.message)
   end
 
   # == Refute tests
@@ -93,7 +93,7 @@ class ActiveEventStore::TestHelperTest < Minitest::Test
       end
     end
 
-    assert_match(/at least 1 test_event not.*with attributes.*:user_id=>25.*:action_type=>"birth".*/s, e.message)
+    assert_match(/at least 1 test_event not.*with attributes.*#{{user_id: 25, action_type: "birth"}.inspect}.*/s, e.message)
   end
 
   def test_refute_event_published_with_attribute_mismatched

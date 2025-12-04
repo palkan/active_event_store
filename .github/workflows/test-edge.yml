@@ -10,7 +10,7 @@ on:
     - cron: "10 4 * * */5"
 
 jobs:
-  rspec:
+  test:
     runs-on: ubuntu-latest
     env:
       BUNDLE_JOBS: 4
@@ -25,7 +25,7 @@ jobs:
           "gemfiles/resmaster.gemfile"
         ]
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v6
     - name: Install system deps
       run: |
         sudo apt-get update
@@ -37,3 +37,6 @@ jobs:
     - name: Run RSpec
       run: |
         bundle exec rspec
+    - name: Run Minitest
+      run: |
+        bundle exec rake test
