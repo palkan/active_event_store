@@ -2,6 +2,8 @@
 
 ## master
 
+## 1.3.0 (2025-12-04)
+
 - Update Rails Event Store configuration to avoid deprecation warning ([@christophermlne][], [@phil-monroe][])
 - Corrected two typos in the engine warning when Active Job isn't loaded ([@wwahammy][])
 
