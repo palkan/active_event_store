@@ -15,16 +15,35 @@ module ActiveEventStore
     end
 
     config.to_prepare do
+      # `AfterCommitAsyncDispatcher` was renamed to `AfterCommitDispatcher` in
+      # rails_event_store 2.19.0 and removed in 3.0.0. Both share the same
+      # `scheduler:` interface, so pick whichever is available.
+      after_commit_dispatcher_class =
+        if defined?(RailsEventStore::AfterCommitDispatcher)
+          RailsEventStore::AfterCommitDispatcher
+        else
+          RailsEventStore::AfterCommitAsyncDispatcher
+        end
+
+      # `RubyEventStore::Dispatcher` was renamed to `SyncScheduler` in the same
+      # release (2.19.0) and removed in 3.0.0.
+      sync_dispatcher =
+        if defined?(RubyEventStore::SyncScheduler)
+          RubyEventStore::SyncScheduler.new
+        else
+          RubyEventStore::Dispatcher.new
+        end
+
       # See https://railseventstore.org/docs/subscribe/#scheduling-async-handlers-after-commit
       ActiveEventStore.event_store = RailsEventStore::Client.new(
         message_broker: RubyEventStore::Broker.new(
           dispatcher: RubyEventStore::ComposedDispatcher.new(
-            RailsEventStore::AfterCommitAsyncDispatcher.new(
+            after_commit_dispatcher_class.new(
               scheduler: RailsEventStore::ActiveJobScheduler.new(
                 serializer: ActiveEventStore.config.serializer
               )
             ),
-            RubyEventStore::Dispatcher.new
+            sync_dispatcher
           )
         ),
         repository: ActiveEventStore.config.repository,
