@@ -7,7 +7,7 @@ module ActiveEventStore
     attr_writer :repository, :serializer, :job_queue_name, :store_options
 
     def repository
-      @repository ||= RailsEventStoreActiveRecord::EventRepository.new(serializer: serializer)
+      @repository ||= RubyEventStore::ActiveRecord::EventRepository.new(serializer: serializer)
     end
 
     def serializer
