@@ -2,6 +2,8 @@
 
 ## master
 
+- Support `wait:` / `wait_until:` on asynchronous `subscribe`, scheduling the subscriber job to run after a delay. ([@rickychilcott][])
+
 ## 1.3.0 (2025-12-04)
 
 - Update Rails Event Store configuration to avoid deprecation warning ([@christophermlne][], [@phil-monroe][])
@@ -51,3 +53,4 @@ Now `ActiveSupport.on_load(:active_event_store) { ... }` works.
 [@chriscz]: https://github.com/chriscz
 [@caws]: https://github.com/caws
 [@Samsinite]: https://github.com/Samsinite
+[@rickychilcott]: https://github.com/rickychilcott

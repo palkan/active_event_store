@@ -128,6 +128,16 @@ ActiveSupport.on_load :active_event_store do |store|
   # sync subscriber – invoked right "within" `publish` method
   store.subscribe MyEventHandler, to: ProfileCreated, sync: true
 
+  # delayed async subscriber – the background job is enqueued with a delay.
+  # `wait:` and `wait_until:` are passed through to Active Job's `.set`.
+  # `wait:` (a duration or number of seconds) is applied relative to when the
+  # event is published, so this reads "10 minutes after the event".
+  store.subscribe MyEventHandler, to: ProfileCreated, wait: 10.minutes
+
+  # NOTE: `wait_until:` is an absolute time, captured when `subscribe` runs
+  # (i.e. at boot). Prefer `wait:` unless you truly mean a fixed moment.
+  store.subscribe MyEventHandler, to: ProfileCreated, wait_until: Date.parse("2030-01-01").midnight
+
   # anonymous handler (could only be synchronous)
   store.subscribe(to: ProfileCreated, sync: true) do |event|
     # do something
