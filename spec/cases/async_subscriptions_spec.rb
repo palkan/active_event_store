@@ -59,6 +59,61 @@ describe "async #subscribe" do
     end.to raise_error(/could not be asynchronous/)
   end
 
+  it "enqueues job with a delay when `wait:` is given" do
+    freeze_time do
+      ActiveEventStore.subscribe(callable, to: event_class, wait: 10.minutes)
+
+      expect do
+        ActiveRecord::Base.transaction do
+          ActiveEventStore.publish(event)
+        end
+      end.to have_enqueued_job.at(10.minutes.from_now)
+    end
+  end
+
+  it "enqueues job at a specific time when `wait_until:` is given" do
+    freeze_time do
+      target = 1.hour.from_now
+      ActiveEventStore.subscribe(callable, to: event_class, wait_until: target)
+
+      expect do
+        ActiveRecord::Base.transaction do
+          ActiveEventStore.publish(event)
+        end
+      end.to have_enqueued_job.at(target)
+    end
+  end
+
+  it "raises when `wait:` is combined with `sync: true`" do
+    expect do
+      ActiveEventStore.subscribe(callable, to: event_class, sync: true, wait: 10.minutes)
+    end.to raise_error(ArgumentError, /only supported for async/)
+  end
+
+  it "raises at the subscription site when `wait:` is not a duration or number" do
+    expect do
+      ActiveEventStore.subscribe(callable, to: event_class, wait: -> { 10.minutes })
+    end.to raise_error(ArgumentError, /`wait:` must be a number of seconds or an ActiveSupport::Duration/)
+  end
+
+  it "accepts an integer number of seconds for `wait:`" do
+    freeze_time do
+      ActiveEventStore.subscribe(callable, to: event_class, wait: 90)
+
+      expect do
+        ActiveRecord::Base.transaction do
+          ActiveEventStore.publish(event)
+        end
+      end.to have_enqueued_job.at(90.seconds.from_now)
+    end
+  end
+
+  it "raises at the subscription site when `wait_until:` is not a time" do
+    expect do
+      ActiveEventStore.subscribe(callable, to: event_class, wait_until: "tomorrow")
+    end.to raise_error(ArgumentError, /`wait_until:` must be a time/)
+  end
+
   context "when subscriber is a Class" do
     context "when call is a class method" do
       let(:callable) {

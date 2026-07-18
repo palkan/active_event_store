@@ -2,7 +2,9 @@
 
 ## master
 
-- Support rails_event_store 3.0 by using the renamed `RailsEventStore::AfterCommitDispatcher`, `RubyEventStore::SyncScheduler` and `RubyEventStore::ActiveRecord::EventRepository`, falling back to the pre-2.19 names when running on older versions. ([#24][])
+- Support `wait:` / `wait_until:` on asynchronous `subscribe`, scheduling the subscriber job to run after a delay. ([@rickychilcott][])
+
+- Support rails_event_store 3.0 by using the renamed `RailsEventStore::AfterCommitDispatcher`, `RubyEventStore::SyncScheduler` and `RubyEventStore::ActiveRecord::EventRepository`, falling back to the pre-2.19 names when running on older versions. ([#24](https://github.com/palkan/active_event_store/issues/24))
 
 ## 1.3.0 (2025-12-04)
 
@@ -53,4 +55,4 @@ Now `ActiveSupport.on_load(:active_event_store) { ... }` works.
 [@chriscz]: https://github.com/chriscz
 [@caws]: https://github.com/caws
 [@Samsinite]: https://github.com/Samsinite
-[#24]: https://github.com/palkan/active_event_store/issues/24
+[@rickychilcott]: https://github.com/rickychilcott
