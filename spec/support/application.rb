@@ -23,7 +23,11 @@ rescue => e
 end
 
 Dir.chdir(APP_ROOT) do
-  Rails::Generators.invoke("rails_event_store_active_record:migration")
+  if RubyEventStore::VERSION >= "3.0.0"
+    Rails::Generators.invoke("ruby_event_store:active_record:migration")
+  else
+    Rails::Generators.invoke("rails_event_store_active_record:migration")
+  end
 end
 
 if Rails::VERSION::MAJOR > 6

@@ -4,6 +4,8 @@
 
 - Support `wait:` / `wait_until:` on asynchronous `subscribe`, scheduling the subscriber job to run after a delay. ([@rickychilcott][])
 
+- Support rails_event_store 3.0 by using the renamed `RailsEventStore::AfterCommitDispatcher`, `RubyEventStore::SyncScheduler` and `RubyEventStore::ActiveRecord::EventRepository`, falling back to the pre-2.19 names when running on older versions. ([#24](https://github.com/palkan/active_event_store/issues/24))
+
 ## 1.3.0 (2025-12-04)
 
 - Update Rails Event Store configuration to avoid deprecation warning ([@christophermlne][], [@phil-monroe][])
